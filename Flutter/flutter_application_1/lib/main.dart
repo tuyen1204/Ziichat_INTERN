@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,7 +29,18 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class Todo {
+  final String title;
+  final String description;
+  Todo(this.title, this.description);
+}
+
 class _MyHomePageState extends State<MyHomePage> {
+  final todos = List.generate(
+      10,
+      (i) => Todo(
+          'Todo $i', 'A description of what needs to be done for Todo $i'));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,13 +63,21 @@ class _MyHomePageState extends State<MyHomePage> {
               Column(
                 spacing: 12,
                 children: [
-                  for (int i = 0; i < 10; i++)
-                    Container(
-                      color: Color(0xFFE0E0E0),
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      child: Text("Item $i"),
-                    )
+                  for (var todo in todos)
+                    Card(
+                      child: ListTile(
+                        title: Text(todo.title),
+                        subtitle: Text(todo.description),
+                        onTap: () {
+                          // Redirect to the detail page
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ToDetail(),
+                                  settings: RouteSettings(arguments: todo)));
+                        },
+                      ),
+                    ),
                 ],
               ),
               TextButton(
@@ -65,17 +85,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
                   backgroundColor: WidgetStateProperty.all<Color>(Colors.amber),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Route route =
+                      MaterialPageRoute(builder: (context) => SecondHome());
+                  Navigator.push(context, route);
+                },
                 child: Text(
-                  'TextButton',
+                  'Second Home',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  print("on pressed");
-                },
-                child: Text('ElevatedButton'),
+                onPressed: () {},
+                child: Text('Button'),
               ),
               FilledButton(onPressed: null, child: Text('Disabled')),
               FloatingActionButton(
@@ -122,8 +144,83 @@ class _MyHomePageState extends State<MyHomePage> {
                   FocusManager.instance.primaryFocus?.unfocus();
                 },
               ),
+              SizedBox(
+                height: 200,
+                child: CarouselView(
+                  itemExtent: 200,
+                  children: [
+                    for (int i = 0; i < 10; i++)
+                      SizedBox(
+                        width: double.infinity,
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: Image.asset('assets/images/image-1.jpg'),
+                        ),
+                      )
+                  ],
+                ),
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ToDetail extends StatelessWidget {
+  const ToDetail({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final todo = ModalRoute.of(context)!.settings.arguments as Todo;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detail Page ${todo.title}'),
+      ),
+      body: Column(
+        spacing: 16,
+        children: [
+          Text(
+            'This is the second home page ${todo.title}',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Go back!'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SecondHome extends StatelessWidget {
+  const SecondHome({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second Home'),
+      ),
+      body: Center(
+        child: Column(
+          spacing: 16,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Go back!'),
+            ),
+          ],
         ),
       ),
     );
