@@ -13,7 +13,7 @@ import type { LinksFunction } from "@remix-run/node";
 // existing imports
 import appStylesHref from "./app.css?url";
 import { getContacts } from "./data";
-import Outlet from "./routes/contacts.111";
+import ContactComponent from "./routes/contacts.$contactId";
 
 export const loader = async () => {
   const contacts = await getContacts();
@@ -52,7 +52,7 @@ export default function App() {
             </Form>
           </div>
           <nav>
-          {contacts.length ? (
+            {contacts.length ? (
               <ul>
                 {contacts.map((contact) => (
                   <li key={contact.id}>
@@ -70,7 +70,7 @@ export default function App() {
           </nav>
         </div>
         <div id="detail">
-          <Outlet />
+          <ContactComponent />
         </div>
         <ScrollRestoration />
         <Scripts />
