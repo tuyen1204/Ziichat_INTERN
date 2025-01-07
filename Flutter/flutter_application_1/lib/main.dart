@@ -44,7 +44,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context)
+            .colorScheme
+            .inversePrimary, //! Use the primary color
         title: Text(widget.title),
       ),
       body: Container(
@@ -68,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         title: Text(todo.title),
                         subtitle: Text(todo.description),
                         onTap: () {
-                          // Redirect to the detail page
+                          //! Redirect to the detail page
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -158,6 +160,54 @@ class _MyHomePageState extends State<MyHomePage> {
                       )
                   ],
                 ),
+              ),
+
+              //* 7/1/2025
+              GridView.count(
+                //! Use simple count
+                scrollDirection: Axis.vertical, //! Get auto height of the grid
+                shrinkWrap: true, //! Get auto height of the grid
+                physics: NeverScrollableScrollPhysics(), //! Disable scrolling
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 12,
+                crossAxisCount: 4,
+                children: <Widget>[
+                  for (int i = 0; i < 10; i++)
+                    ClipRRect(
+                      //! Use Rounded for Image
+                      borderRadius: BorderRadius.circular(8),
+                      child: FittedBox(
+                        //! Use Cover for Image
+                        fit: BoxFit.fill,
+                        child: Image.asset(
+                          'assets/images/image-1.jpg',
+                        ),
+                      ),
+                    )
+                ],
+              ),
+
+              GridView.builder(
+                //! Use as loop
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                ),
+                itemBuilder: (_, index) => ClipRRect(
+                    // Use Rounded for Image
+                    borderRadius: BorderRadius.circular(8),
+                    child: FittedBox(
+                      // Use Cover for Image
+                      fit: BoxFit.fill,
+                      child: Image.asset(
+                        'assets/images/image-1.jpg',
+                      ),
+                    )),
+                itemCount: 4,
               ),
             ],
           ),
