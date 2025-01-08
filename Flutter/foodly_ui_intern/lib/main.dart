@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_ui_intern/constants.dart';
+import 'package:foodly_ui_intern/screens/home/home_screen.dart';
 import 'package:foodly_ui_intern/screens/onboarding/onboarding_screen.dart';
 
 void main() {
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           titleMedium: TextStyle(color: bodyTextColor),
         ),
       ),
-      home: const OnboardingScreen(),
+      home: const HomeScreen(),
     );
   }
 }
