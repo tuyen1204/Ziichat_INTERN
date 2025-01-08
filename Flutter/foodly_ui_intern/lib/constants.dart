@@ -7,3 +7,4 @@ const bodyTextColor = Color(0xFF868686);
 const inputColor = Color(0xFFFBFBFB);
 
 const double defaultPadding = 16;
+const double spacingSection = 40;

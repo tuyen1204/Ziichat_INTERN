@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:foodly_ui_intern/components/dot_navigation.dart';
 import 'package:foodly_ui_intern/constants.dart';
 import 'package:foodly_ui_intern/screens/authenticator/sign_in_screen.dart';
 
@@ -46,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                     onboardingData.length,
-                    (index) => OnboardingNavigation(
+                    (index) => DotNavigation(
                       isActive: index == currentPage,
                     ),
                   ),
@@ -128,32 +129,6 @@ class OnboardingItem extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ],
-    );
-  }
-}
-
-class OnboardingNavigation extends StatelessWidget {
-  const OnboardingNavigation({
-    super.key,
-    this.isActive = false,
-    this.activeColor = primaryColor,
-    this.inActiveColor = Colors.grey,
-    this.activeWidth = 10,
-  });
-
-  final bool isActive;
-  final Color activeColor, inActiveColor;
-  final double activeWidth;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: isActive ? activeWidth : 5,
-      height: 5,
-      margin: const EdgeInsetsDirectional.symmetric(horizontal: 4),
-      decoration: BoxDecoration(
-          color: isActive ? activeColor : inActiveColor,
-          borderRadius: BorderRadius.all(Radius.circular(30))),
     );
   }
 }
