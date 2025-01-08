@@ -25,16 +25,16 @@ class TitleSection extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: Colors.black87),
               ),
-              TextButton(
-                onPressed: () {},
+              GestureDetector(
+                onTap: onPressAction,
                 child: Text(
                   actionTitle,
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: primaryColor,
                       fontWeight: FontWeight.w500),
                 ),

@@ -3,6 +3,24 @@ import 'package:foodly_ui_intern/components/dot_navigation.dart';
 import 'package:foodly_ui_intern/components/title_section.dart';
 import 'package:foodly_ui_intern/constants.dart';
 
+class ItemCard {
+  final String url;
+  final String title;
+  final String description;
+  final String time;
+  final String delivery;
+  final double rating;
+
+  ItemCard({
+    required this.url,
+    required this.title,
+    required this.description,
+    required this.time,
+    required this.delivery,
+    required this.rating,
+  });
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -36,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding:
                 const EdgeInsets.only(top: 8, left: 8, right: 16, bottom: 8),
-            child: TextButton(
-                onPressed: () {},
+            child: GestureDetector(
+                onTap: () {},
                 child: Text(
                   "Filter",
                   style: TextStyle(fontWeight: FontWeight.w600),
@@ -59,11 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 240,
                     child: PageView.builder(
                       itemCount: dataBigCard.length,
-                      itemBuilder: (context, index) => Center(
-                        child: BigCard(
-                          image: dataBigCard[index],
-                        ),
-                      ),
+                      itemBuilder: (context, index) =>
+                          _buildBigCard(image: dataBigCard[index]),
                       onPageChanged: (value) => setState(() {
                         currentPage = value;
                       }),
@@ -87,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: spacingSection),
             Column(
-              spacing: 20,
+              spacing: 12,
               children: [
                 TitleSection(
                   title: "Features Partners",
@@ -95,26 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressAction: () {},
                 ),
                 SizedBox(
-                  height: 260,
+                  width: double.infinity,
+                  height: 360,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.only(left: defaultPadding),
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/image-1.jpg',
-                              height: 200,
-                              width: 200,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    itemCount: dataMediumCard.length,
+                    itemBuilder: (context, index) => _buildMediumCard(
+                        index: index,
+                        itemCard: dataMediumCard[index],
+                        length: dataMediumCard.length),
                   ),
                 ),
               ],
@@ -124,18 +128,101 @@ class _HomeScreenState extends State<HomeScreen> {
       )),
     );
   }
-}
 
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.image,
-  });
+  Padding _buildMediumCard(
+      {required int index, required ItemCard itemCard, required int length}) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: defaultPadding,
+        right: (length - 1) == index ? defaultPadding : 0,
+      ),
+      child: ConstrainedBox(
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 1.5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.asset(
+                itemCard.url,
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              itemCard.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
+            ),
+            SizedBox(height: 4),
+            Text(
+              itemCard.description,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+              ),
+            ),
+            SizedBox(height: 12),
+            Row(
+              spacing: 12,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(4)),
+                  child: Text(
+                    itemCard.rating.toString(),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Row(
+                  spacing: 8,
+                  children: [
+                    Text(
+                      itemCard.time,
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                    ),
+                    Container(
+                      height: 4,
+                      width: 4,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    Text(
+                      itemCard.delivery,
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
+  Container _buildBigCard({required String image}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 0),
       child: ClipRRect(
@@ -153,4 +240,39 @@ List<String> dataBigCard = [
   "assets/images/big_1.png",
   "assets/images/big_2.png",
   "assets/images/big_3.png",
+];
+
+List<ItemCard> dataMediumCard = [
+  ItemCard(
+    url: "assets/images/medium_1.png",
+    title: "title_1",
+    description: "description_1",
+    time: "time_1",
+    delivery: "delivery_1",
+    rating: 4.5,
+  ),
+  ItemCard(
+    url: "assets/images/medium_2.png",
+    title: "title_2",
+    description: "description_2",
+    time: "time_2",
+    delivery: "delivery_2",
+    rating: 4.2,
+  ),
+  ItemCard(
+    url: "assets/images/medium_3.png",
+    title: "title_3",
+    description: "description_3",
+    time: "time_3",
+    delivery: "delivery_3",
+    rating: 4.8,
+  ),
+  ItemCard(
+    url: "assets/images/medium_4.png",
+    title: "title_4",
+    description: "description_4",
+    time: "time_4",
+    delivery: "delivery_4",
+    rating: 4.8,
+  ),
 ];
