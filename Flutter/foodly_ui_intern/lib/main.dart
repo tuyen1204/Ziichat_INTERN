@@ -13,15 +13,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Foodly UI - Intern',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-        useMaterial3: true,
         //* Settings Button Primary Color
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
               backgroundColor: primaryColor,
               foregroundColor: Colors.white,
-              minimumSize: const Size(double.infinity, 40),
+              minimumSize: const Size(double.infinity, 48),
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              //* Settings Button S
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),

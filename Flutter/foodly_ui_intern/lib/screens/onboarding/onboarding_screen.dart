@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodly_ui_intern/constants.dart';
-import 'package:foodly_ui_intern/screens/authenticator/sing_in_screen.dart';
+import 'package:foodly_ui_intern/screens/authenticator/sign_in_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -19,8 +19,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
+              SizedBox(
+                height: 40,
+              ),
+              Flexible(
+                flex: 5,
                 child: PageView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: onboardingData.length,
@@ -36,12 +41,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   }),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  onboardingData.length,
-                  (index) => OnboardingNavigation(
-                    isActive: index == currentPage,
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    onboardingData.length,
+                    (index) => OnboardingNavigation(
+                      isActive: index == currentPage,
+                    ),
                   ),
                 ),
               ),
@@ -102,6 +109,7 @@ class OnboardingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         AspectRatio(
           aspectRatio: 1,

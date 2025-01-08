@@ -166,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
               //* 7/1/2025
               GridView.count(
                 //! Use simple count
-                scrollDirection: Axis.vertical, //! Get auto height of the grid
+                scrollDirection: Axis.vertical,
                 shrinkWrap: true, //! Get auto height of the grid
                 physics: NeverScrollableScrollPhysics(), //! Disable scrolling
                 mainAxisSpacing: 12,
