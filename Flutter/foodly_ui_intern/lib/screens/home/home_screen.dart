@@ -40,7 +40,17 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
-          children: [],
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/big_1.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
         ),
       )),
     );
